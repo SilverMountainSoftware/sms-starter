@@ -1,4 +1,4 @@
-# Ionic Angular Conference Application
+# Ionic Angular Conference Application with Firebase Auth
 
 This application is purely a kitchen-sink demo of the Ionic Framework and Angular.
 
