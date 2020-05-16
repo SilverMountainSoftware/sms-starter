@@ -1,6 +1,9 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
+import { environment } from '../../src/environments/environment';
+import * as firebase from 'firebase/app';
+import 'firebase/firestore';
 
 import { MenuController, Platform, ToastController } from '@ionic/angular';
 
@@ -83,6 +86,7 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+    firebase.initializeApp(environment.firebase);
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();

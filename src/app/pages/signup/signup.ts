@@ -1,33 +1,66 @@
-import { Component } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../../services/user/auth.service';
+import { LoadingController, AlertController } from '@ionic/angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-
-import { UserData } from '../../providers/user-data';
-
-import { UserOptions } from '../../interfaces/user-options';
-
-
+import { UserService } from '../../services/user/user.service';
 
 @Component({
-  selector: 'page-signup',
-  templateUrl: 'signup.html',
-  styleUrls: ['./signup.scss'],
+  selector: 'app-signup',
+  templateUrl: './signup.html',
+  styleUrls: ['./signup.scss']
 })
-export class SignupPage {
-  signup: UserOptions = { username: '', password: '' };
-  submitted = false;
-
+export class SignupPage implements OnInit {
+  public signupForm: FormGroup;
+  public loading: any;
   constructor(
-    public router: Router,
-    public userData: UserData
-  ) {}
+    private authService: AuthService,
+    private loadingCtrl: LoadingController,
+    private alertCtrl: AlertController,
+    private formBuilder: FormBuilder,
+    private router: Router,
+    private profileService: UserService,
+  ) {
+    this.signupForm = this.formBuilder.group({
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: [
+        '',
+        Validators.compose([Validators.minLength(6), Validators.required])
+      ]
+    });
+  }
 
-  onSignup(form: NgForm) {
-    this.submitted = true;
+  ngOnInit() {}
 
-    if (form.valid) {
-      this.userData.signup(this.signup.username);
-      this.router.navigateByUrl('/app/tabs/schedule');
+  async signupUser(signupForm: FormGroup): Promise<void> {
+    if (!signupForm.valid) {
+      console.log(
+        'Need to complete the form, current value: ',
+        signupForm.value
+      );
+    } else {
+      const email: string = signupForm.value.email;
+      const password: string = signupForm.value.password;
+
+      this.authService.signupUser(email, password).then(
+        () => {
+          this.loading.dismiss().then(() => {
+            this.profileService.initialEmail(email);
+            this.router.navigateByUrl('app/tabs/schedule');
+          });
+        },
+        error => {
+          this.loading.dismiss().then(async () => {
+            const alert = await this.alertCtrl.create({
+              message: error.message,
+              buttons: [{ text: 'Ok', role: 'cancel' }]
+            });
+            await alert.present();
+          });
+        }
+      );
+      this.loading = await this.loadingCtrl.create();
+      await this.loading.present();
     }
   }
 }
