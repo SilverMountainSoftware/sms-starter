@@ -9,10 +9,11 @@ import { MenuController, Platform, ToastController } from '@ionic/angular';
 
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
+import { AuthService } from './services/user/auth.service';
+import { UserService } from './services/user/user.service';
 
 import { Storage } from '@ionic/storage';
-
-import { UserData } from './providers/user-data';
+import { UserType } from './enums/user-type';
 
 @Component({
   selector: 'app-root',
@@ -44,7 +45,12 @@ export class AppComponent implements OnInit {
     }
   ];
   loggedIn = false;
+  admin = false;
+  userId: any;
   dark = false;
+  userSubscription: any;
+  public userProfile: any = {};
+  public userType: UserType = UserType.Unapproved;
 
   constructor(
     private menu: MenuController,
@@ -53,9 +59,10 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private storage: Storage,
-    private userData: UserData,
     private swUpdate: SwUpdate,
     private toastCtrl: ToastController,
+    private authService: AuthService,
+    private profileService: UserService,
   ) {
     this.initializeApp();
   }
@@ -93,10 +100,39 @@ export class AppComponent implements OnInit {
     });
   }
 
-  checkLoginStatus() {
-    return this.userData.isLoggedIn().then(loggedIn => {
-      return this.updateLoggedInStatus(loggedIn);
+  async getProfile() {
+    this.profileService.getUserProfile().then(userProfileSnapshot => {
+      if (userProfileSnapshot.data()) {
+        this.userProfile = userProfileSnapshot.data();
+        this.admin = this.userProfile.admin;
+        this.userType = this.userProfile.userType;
+      }
     });
+  }
+
+  async checkProfile() {
+    if (this.userId) {
+      this.getProfile();
+    }
+  }
+
+  async checkLoginStatus() {
+    const user: firebase.User = await this.authService.getUser();
+    if (user) {
+      this.loggedIn = true;
+      this.userId = user.uid;
+      this.getProfile();
+    } else {
+      if (this.userSubscription) {
+        this.userSubscription.unsubscribe();
+      }
+
+      this.loggedIn = false;
+      this.userId = null;
+      this.userProfile = null;
+    }
+
+    return this.updateLoggedInStatus(this.loggedIn);
   }
 
   updateLoggedInStatus(loggedIn: boolean) {
@@ -120,8 +156,10 @@ export class AppComponent implements OnInit {
   }
 
   logout() {
-    this.userData.logout().then(() => {
-      return this.router.navigateByUrl('/app/tabs/schedule');
+    this.authService.logoutUser().then(() => {
+      this.loggedIn = false;
+      //// this.userEventService.publishUserRefresh();
+      return this.router.navigateByUrl('/app/tabs/home');
     });
   }
 

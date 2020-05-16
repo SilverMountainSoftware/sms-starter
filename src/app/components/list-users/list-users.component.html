@@ -1,0 +1,38 @@
+<ion-item>
+  <ion-label>User Group</ion-label>
+  <ion-select interface="popover" name="userselect" value="admin" (ionChange)="selectionChanged($event)">
+    <ion-select-option value="all">All Users</ion-select-option>
+    <ion-select-option value="admin">{{admin}}</ion-select-option>
+    <!-- <ion-select-option value="admin">{{'ROLE.ADMIN' | translate}}</ion-select-option> -->
+    <ion-select-option value="teacher">{{teacher}}</ion-select-option>
+    <ion-select-option value="student">{{student}}</ion-select-option>
+    <ion-select-option value="unapproved">{{unapproved}}</ion-select-option>
+  </ion-select>
+</ion-item>
+
+  <ion-list>
+    <ion-title>{{title | titlecase}}</ion-title>
+    <ion-item *ngFor="let user of users">
+      <ion-row>
+        <ion-col size="4">
+          <ion-label>
+            {{user.firstName}} {{user.lastName}}
+          </ion-label>
+        </ion-col>
+        <ion-col *ngIf="showEmailButton">
+          <ion-button class="call-to-action-btn" size="small" color="secondary" (click)="sendEmail(user.id)">Email
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="call-to-action-btn" size="small" color="primary" (click)="editProfile(user.id)">
+            Edit Profile
+          </ion-button>
+        </ion-col>
+        <ion-col size="4">
+          <ion-button class="call-to-action-btn" size="small" color="primary" (click)="editCalendar(user.id)">
+            Edit Calendar
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>

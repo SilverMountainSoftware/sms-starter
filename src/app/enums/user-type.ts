@@ -1,5 +1,5 @@
 export enum UserType {
   Unapproved = 0,
-  Student = 1,
-  Teacher = 2
+  RegularUser = 1,
+  SuperUser = 2
 }
