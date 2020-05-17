@@ -1,0 +1,70 @@
+<ion-header>
+  <ion-toolbar color="primary">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profile Page</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="logOut()">
+        <ion-icon slot="icon-only" name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <h1>User Profile</h1>
+  <ion-list lines="full">
+    <form [formGroup]="form" (ngSubmit)="onFormSubmit()">
+      <ion-text color="danger">{{errorMessage}}</ion-text>
+      <ion-item>
+        <ion-label position="floating">First Name</ion-label>
+        <ion-input formControlName="firstName" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Last Name</ion-label>
+        <ion-input formControlName="lastName" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input formControlName="email" type="text" required></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="floating">Birthdate</ion-label>
+        <ion-datetime formControlName="birthDate" required></ion-datetime>
+      </ion-item>
+
+      <ion-item-group *ngIf="currentUser.admin">
+        <ion-item>
+          <ion-label>Approved</ion-label>
+          <ion-toggle formControlName="approved" type="boolean" required>
+          </ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>Admin</ion-label>
+          <ion-toggle formControlName="admin" type="boolean" required>
+          </ion-toggle>
+        </ion-item>
+
+        <ion-item>
+          <ion-label>User Type</ion-label>
+          <ion-select formControlName="userType">
+            <ion-select-option [value]="1">Regular User</ion-select-option>
+            <ion-select-option [value]="2">Super User</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-item-group>
+
+      <ion-row>
+        <ion-col>
+          <ion-button type="submit" color="primary" shape="full" expand="block">Update</ion-button>
+        </ion-col>
+      </ion-row>
+
+    </form>
+  </ion-list>
+</ion-content>

@@ -8,9 +8,10 @@ const routes: Routes = [
     redirectTo: '/tutorial',
     pathMatch: 'full'
   },
+
   {
-    path: 'account',
-    loadChildren: () => import('./pages/account/account.module').then(m => m.AccountModule)
+    path: 'profile/:id',
+    loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)
   },
   {
     path: 'support',

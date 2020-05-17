@@ -50,7 +50,7 @@ export class LoginPage implements OnInit {
           this.profileService.setEmail(email);
           this.loading.dismiss().then(() => {
             this.userEventService.publishUserRefresh();
-            this.router.navigateByUrl('home');
+            this.router.navigateByUrl('app/tabs/schedule');
           });
         },
         error => {

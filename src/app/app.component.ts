@@ -46,7 +46,7 @@ export class AppComponent implements OnInit {
   ];
   loggedIn = false;
   admin = false;
-  userId: any;
+  public userId: any;
   dark = false;
   userSubscription: any;
   public userProfile: any = {};
