@@ -159,7 +159,7 @@ export class AppComponent implements OnInit {
     this.authService.logoutUser().then(() => {
       this.loggedIn = false;
       //// this.userEventService.publishUserRefresh();
-      return this.router.navigateByUrl('/app/tabs/home');
+      return this.router.navigateByUrl('/app/tabs/schedule');
     });
   }
 
