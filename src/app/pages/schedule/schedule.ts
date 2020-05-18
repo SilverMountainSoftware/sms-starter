@@ -5,6 +5,9 @@ import { AlertController, IonList, IonRouterOutlet, LoadingController, ModalCont
 import { ScheduleFilterPage } from '../schedule-filter/schedule-filter';
 import { ConferenceData } from '../../providers/conference-data';
 import { UserData } from '../../providers/user-data';
+import { AuthService } from '../../services/user/auth.service';
+import { UserType } from '../../enums/user-type';
+import { UserProfileService } from '../../services/user/user-profile.service';
 
 @Component({
   selector: 'page-schedule',
@@ -24,6 +27,8 @@ export class SchedulePage implements OnInit {
   groups: any = [];
   confDate: string;
   showSearchbar: boolean;
+  loggedIn = false;
+  userType: UserType = UserType.Unapproved;
 
   constructor(
     public alertCtrl: AlertController,
@@ -34,13 +39,27 @@ export class SchedulePage implements OnInit {
     public routerOutlet: IonRouterOutlet,
     public toastCtrl: ToastController,
     public user: UserData,
-    public config: Config
+    public config: Config,
+    private authService: AuthService,
+    private userProfileService: UserProfileService,
   ) { }
 
   ngOnInit() {
     this.updateSchedule();
-
+    this.checkUser();
     this.ios = this.config.get('mode') === 'ios';
+  }
+
+  async checkUser() {
+    const user: firebase.User = await this.authService.getUser();
+    if (user) {
+      this.loggedIn = true;
+      this.userProfileService.getUser(user.uid).subscribe(res => {
+        this.userType = res.userType;
+      });
+    } else {
+      this.loggedIn = false;
+    }
   }
 
   updateSchedule() {
