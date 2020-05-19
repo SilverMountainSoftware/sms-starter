@@ -47,12 +47,12 @@
       <ion-searchbar [(ngModel)]="queryText" (ionChange)="updateSchedule()" placeholder="Search"></ion-searchbar>
     </ion-toolbar>
   </ion-header>
-
-  <ion-list *ngIf="userType === 0">
+  <ion-list *ngIf="userType == 0">
     <ion-text>
       Until you have logged in, created a profile, and are approved, you cannot see the schedule
     </ion-text>
   </ion-list>
+
   <ion-list #scheduleList [hidden]="shownSessions === 0" *ngIf="userType != 0">
     <ion-item-group *ngFor="let group of groups" [hidden]="group.hide">
       <ion-item-divider sticky>

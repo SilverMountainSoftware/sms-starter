@@ -27,10 +27,12 @@ export class AuthService {
     email: string,
     password: string
   ): Promise<firebase.auth.UserCredential> {
+    window.dispatchEvent(new CustomEvent('user:login'));
     return firebase.auth().signInWithEmailAndPassword(email, password);
   }
 
   signupUser(email: string, password: string): Promise<any> {
+    window.dispatchEvent(new CustomEvent('user:signup'));
     return firebase.auth().createUserWithEmailAndPassword(email, password);
   }
 
@@ -39,6 +41,7 @@ export class AuthService {
   }
 
   logoutUser(): Promise<void> {
+    window.dispatchEvent(new CustomEvent('user:logout'));
     return firebase.auth().signOut();
   }
 }
