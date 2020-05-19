@@ -3,7 +3,6 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { AuthService } from '../../services/user/auth.service';
 import { UserService } from '../../services/user/user.service';
-import { UserEventService } from '../../services/user/user-event.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -21,7 +20,6 @@ export class LoginPage implements OnInit {
     private profileService: UserService,
     private router: Router,
     private formBuilder: FormBuilder,
-    private userEventService: UserEventService,
   ) {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.compose([Validators.required, Validators.email])],
@@ -49,7 +47,6 @@ export class LoginPage implements OnInit {
         () => {
           this.profileService.setEmail(email);
           this.loading.dismiss().then(() => {
-            this.userEventService.publishUserRefresh();
             this.router.navigateByUrl('app/tabs/schedule');
           });
         },
