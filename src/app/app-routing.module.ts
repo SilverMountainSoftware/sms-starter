@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CheckTutorial } from './providers/check-tutorial.service';
+import { AuthGuard } from './services/user/auth.guard';
+import { AdminGuard } from './services/user/admin.guard';
 
 const routes: Routes = [
   {
@@ -8,7 +10,11 @@ const routes: Routes = [
     redirectTo: '/tutorial',
     pathMatch: 'full'
   },
-
+  {
+    path: 'admin',
+    loadChildren: () => import('./pages/admin/admin.module').then( m => m.AdminPageModule),
+    canActivate: [AdminGuard],
+  },
   {
     path: 'profile/:id',
     loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfilePageModule)

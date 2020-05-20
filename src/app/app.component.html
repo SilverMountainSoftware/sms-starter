@@ -2,6 +2,21 @@
   <ion-split-pane contentId="main-content">
     <ion-menu contentId="main-content">
       <ion-content>
+        <ion-list *ngIf="admin" lines="none">
+          <ion-list-header>
+            Admin
+          </ion-list-header>
+          <ion-menu-toggle autoHide="false">
+            <ion-item [routerLink]="['/admin']" routerLinkActive="active" routerDirection="root" detail="false">
+              <ion-icon slot="start" name="person"></ion-icon>
+              <ion-label>
+                User Admin
+              </ion-label>
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+
+
         <ion-list lines="none">
           <ion-list-header>
             Conference

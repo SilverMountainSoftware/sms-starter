@@ -11,6 +11,7 @@ import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AuthService } from './services/user/auth.service';
 import { UserService } from './services/user/user.service';
+import { TranslateService } from '@ngx-translate/core';
 
 import { Storage } from '@ionic/storage';
 import { UserType } from './enums/user-type';

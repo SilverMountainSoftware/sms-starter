@@ -13,8 +13,8 @@ export class ListUsersComponent implements OnInit {
   public users: UserProfileId[];
   public title = 'admin';
   public admin = 'Admin';
-  public teacher = 'Therapist';
-  public student = 'Patient';
+  public superuser = 'Super user';
+  public regularuser = 'Regular user';
   public unapproved = 'Unapproved';
   constructor(
     private router: Router,
@@ -32,11 +32,11 @@ export class ListUsersComponent implements OnInit {
       this.admin = res;
       this.title = res;
     });
-    this.translate.get('ROLES.TEACHER').subscribe((res: string) => {
-      this.teacher = res;
+    this.translate.get('ROLES.SUPERUSER').subscribe((res: string) => {
+      this.superuser = res;
     });
-    this.translate.get('ROLES.STUDENT').subscribe((res: string) => {
-      this.student = res;
+    this.translate.get('ROLES.REGULARUSER').subscribe((res: string) => {
+      this.regularuser = res;
     });
     this.translate.get('ROLES.UNAPPROVED').subscribe((res: string) => {
       this.unapproved = res;
