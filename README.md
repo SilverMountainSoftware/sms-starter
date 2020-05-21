@@ -6,6 +6,8 @@ This application is purely a kitchen-sink demo of the Ionic Framework and Angula
 
 
 ## Table of Contents
+
+- [Firebase](#firebase)
 - [Getting Started](#getting-started)
 - [Contributing](#contributing)
 - [App Preview](#app-preview)
@@ -14,6 +16,27 @@ This application is purely a kitchen-sink demo of the Ionic Framework and Angula
   - [Android](#android)
   - [iOS](#ios)
 
+## Firebase
+
+Simple Firebase connection and authentication with a simple profile editor. It also has some user management with a couple of auth guards as examples.
+
+You need to add a src/environments/environment.ts file like:
+
+```
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: 'your api key',
+    authDomain: 'your authDomain.firebaseapp.com',
+    databaseURL: 'https://yourdatabaseURL.firebaseio.com',
+    projectId: 'yourprojectid',
+    storageBucket: 'yourstoragebucket.appspot.com',
+    messagingSenderId: '99999999999'
+    appId: '1:123456789098:web:abcdef123456789',
+    measurementId: 'H-ABCD123HJKL',
+  }
+};
+```
 
 ## Getting Started
 
