@@ -14,7 +14,7 @@
     <ion-title>{{title | titlecase}}</ion-title>
     <ion-item *ngFor="let user of users">
       <ion-row>
-        <ion-col size="4">
+        <ion-col>
           <ion-text>
             {{user.firstName}}
           </ion-text>
@@ -22,6 +22,11 @@
         <ion-col>
           <ion-text>
             {{user.lastName}}
+          </ion-text>
+        </ion-col>
+        <ion-col>
+          <ion-text>
+            {{user.email}}
           </ion-text>
         </ion-col>
         <ion-col size="4">

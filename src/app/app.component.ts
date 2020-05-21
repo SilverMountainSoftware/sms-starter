@@ -160,6 +160,7 @@ export class AppComponent implements OnInit {
   logout() {
     this.authService.logoutUser().then(() => {
       this.loggedIn = false;
+      this.admin = false;
       return this.router.navigateByUrl('/app/tabs/schedule');
     });
   }

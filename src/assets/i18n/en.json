@@ -1,0 +1,29 @@
+{
+  "FOLLOW": "Follow",
+  "MESSAGE": "Message",
+  "LIKES" : "Likes",
+  "FOLLOWERS" : "Followers",
+  "FOLLOWING": "Following",
+  "ABOUT": "About",
+  "FRIENDS": "Friends",
+  "PHOTOS": "Photos",
+  "SEE_ALL": "See all",
+  "OK": "OK",
+  "CANCEL": "Cancel",
+  "SELECT_LANGUAGE": "Select your language",
+
+  "HELLO": "Hello",
+  "WELCOME": "Welcome!",
+  "ROLES": {
+    "ADMIN": "Administrators",
+    "SUPERUSER": "Super user",
+    "REGULARUSER": "Regular user",
+    "UNAPPROVED": "Not Approved",
+    "ALL": "All Users"
+  },
+  "ACTIVITY": {
+    "AN": "AM",
+    "PM": "PM",
+    "TITLE": "Activity Calendar"
+  }
+}
